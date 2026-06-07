@@ -84,6 +84,13 @@
     scrollbar-width: none;
 }
 
+html,
+body {
+    min-height: 100%;
+    background: var(--background, #050B1A);
+    color: var(--text-primary, #F8FAFC);
+}
+
 .libre-baskerville {
     font-family: "Libre Baskerville", serif;
     font-optical-sizing: auto;
