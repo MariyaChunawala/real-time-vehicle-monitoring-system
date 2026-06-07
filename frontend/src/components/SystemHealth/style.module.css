@@ -1,0 +1,58 @@
+.systemHealthCard {
+    border-radius: 20px;
+
+    padding: 10px;
+
+
+}
+
+.systemHealthCard h3 {
+    color: var(--text-primary, white);
+    margin-bottom: 12px;
+}
+
+.statusItem {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 8px 0;
+
+    font-size: 16px;
+
+    border-bottom: 1px solid var(--border, #1B2A45);
+}
+
+.statusItem span {
+    color: var(--text-secondary, #94A3B8);
+}
+
+.statusItem strong {
+    color: var(--text-primary, white);
+}
+
+.healthScore {
+    margin-top: 16px;
+
+    text-align: center;
+
+    padding: 8px;
+
+    border-radius: 16px;
+
+    background: var(--surface-alt, #081224);
+}
+
+.healthScore span {
+    color: var(--text-secondary, #94A3B8);
+}
+
+.healthScore h2 {
+    color: var(--online, #22C55E);
+
+    margin-top: 8px;
+
+    font-size: 36px;
+}

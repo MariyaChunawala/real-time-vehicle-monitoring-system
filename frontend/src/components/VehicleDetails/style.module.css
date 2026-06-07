@@ -1,0 +1,44 @@
+.vehicleDetailsCard {
+    border-radius: 20px;
+
+    padding: 12px;
+}
+
+.vehicleDetailsCard h3 {
+    color: var(--text-primary, white);
+
+    margin-bottom: 20px;
+}
+
+.detailsGrid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 5px;
+}
+
+.detailRow {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    padding: 6px 8px;
+
+    border-bottom: 1px solid var(--border, #1B2A45);
+}
+
+.detailRow span {
+    color: var(--text-secondary, #94A3B8);
+
+    font-size: 13px;
+}
+
+.detailRow strong {
+    color: var(--text-primary, #F8FAFC);
+
+    font-weight: 400;
+    font-size: 14px;
+}

@@ -1,0 +1,63 @@
+.locationCard {
+    background: var(--surface, #0D1B31);
+
+    border: 1px solid var(--border, #1B2A45);
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    padding-bottom: 13px;
+}
+
+.cardTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.cardTitle h3 {
+    color: var(--text-primary, white);
+}
+
+.cardTitle span {
+    color: var(--text-secondary, #94A3B8);
+}
+
+.fakeMap {
+    height: 260px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(rgba(255, 255, 255, .03) 1px,
+            transparent 1px),
+        linear-gradient(90deg,
+            rgba(255, 255, 255, .03) 1px,
+            transparent 1px),
+        var(--surface-alt, #081224);
+
+    background-size: 25px 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coordinates {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 10px;
+}
+
+.coordinates span {
+    color: var(--text-secondary, #94A3B8);
+}
+
+.coordinates h3 {
+    color: var(--text-primary, white);
+}
