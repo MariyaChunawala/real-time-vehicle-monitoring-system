@@ -1,0 +1,107 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+
+    background: var(--sidebar-bg, #081224);
+
+    border-right: 1px solid var(--border, #1B2A45);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+    color: var(--text-secondary, #94A3B8);
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border, #1B2A45);
+    padding-bottom: 25px;
+}
+
+.logoIcon {
+    font-size: 40px;
+    display: flex;
+    color: var(--accent, #2563FF);
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    color: var(--text-primary, #F8FAFC);
+    margin: 0;
+}
+
+.subtitle {
+    color: var(--text-secondary, #94A3B8);
+    font-size: 12px;
+    margin: 0;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+
+    color: inherit;
+
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    margin-bottom: 8px;
+
+    transition: 0.2s ease;
+    text-decoration: none;
+}
+
+.menuItem:hover {
+    background: var(--card, #0D1B31);
+    color: var(--text-primary, #F8FAFC);
+}
+
+.active {
+    background: var(--accent, #2563FF);
+    color: var(--text-primary, #F8FAFC);
+}
+
+.menuItem svg {
+    /* ensure icons inherit text color */
+    color: inherit;
+    width: 18px;
+    height: 18px;
+}
+
+.label {
+    font-size: 14px;
+}
+
+.systemStatus {
+    margin-top: auto;
+
+    padding: 16px;
+
+    background: var(--card, #0D1B31);
+
+    border-radius: 12px;
+}
+
+.statusTitle {
+    color: var(--text-primary, #F8FAFC);
+    margin: 0 0 8px 0;
+}
+
+.online {
+    color: var(--online, #22C55E);
+}

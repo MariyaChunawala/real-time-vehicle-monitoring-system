@@ -1,0 +1,53 @@
+.telemetryCard {
+    background: var(--surface, #0D1B31);
+
+    border: 1px solid var(--border, #1B2A45);
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    transition: 0.3s;
+
+    cursor: pointer;
+}
+
+.telemetryCard:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--accent-strong, #2563FF);
+}
+
+.cardHeader {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.cardHeader span:first-child {
+    color: var(--text-secondary, #94A3B8);
+
+    font-size: 14px;
+}
+
+.cardIcon {
+    font-size: 24px;
+}
+
+.telemetryCard h2 {
+    color: var(--text-primary, #F8FAFC);
+
+    font-size: 25px;
+
+    margin-bottom: 8px;
+}
+
+.telemetryCard p {
+    color: var(--online, #22C55E);
+
+    font-size: 14px;
+}
