@@ -7,7 +7,7 @@ import { LiveTelemetryChart, LiveTelemetryRPmChart } from "../../components/Live
 import VehicleLocation from "../../components/VehicleMap/index.tsx";
 import SystemHealth from "../../components/SystemHealth/index.tsx";
 import VechileDetails from "../../components/VehicleDetails/index.tsx";
-
+import { useTelemetry } from "../../contexts/TelemetrySocketContext.tsx";
 
 interface DashboardProps {
     theme: string;
@@ -15,6 +15,19 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
+
+    const { telemetry, history } = useTelemetry();
+
+    const currentTelemetry = telemetry ?? {
+        vehicleId: "N/A",
+        speed: 0,
+        fuel: 0,
+        temperature: 0,
+        rpm: 0,
+        latitude: 0,
+        longitude: 0,
+        timestamp: "Waiting for data",
+    };
 
     const getFuelStatus = (fuel: number) => {
         if (fuel < 20) return "Low Fuel";
@@ -46,28 +59,28 @@ export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
 
                     <TelemetryCard
                         title="Speed"
-                        value="82 km/h"
+                        value={telemetry?.speed != null ? `${telemetry.speed} km/h` : "N/A"}
                         icon={<FaCar style={{ color: "#2563FF", fontSize: "24px" }} />}
                         status="Normal Speed"
                     />
 
                     <TelemetryCard
                         title="Fuel"
-                        value="65%"
+                        value={telemetry?.fuel != null ? `${telemetry.fuel}%` : "N/A"}
                         icon={<FaGasPump style={{ color: "#2563FF", fontSize: "24px" }} />}
-                        status={getFuelStatus(65)}
+                        status={getFuelStatus(telemetry?.fuel || 0)}
                     />
 
                     <TelemetryCard
                         title="Temperature"
-                        value="90°C"
+                        value={telemetry?.temperature != null ? `${telemetry.temperature}°C` : "N/A"}
                         icon={<CiTempHigh style={{ color: "#2563FF", fontSize: "24px" }} />}
-                        status={getTemperatureStatus(90)}
+                        status={getTemperatureStatus(telemetry?.temperature || 0)}
                     />
 
                     <TelemetryCard
                         title="RPM"
-                        value="2850"
+                        value={telemetry?.rpm != null ? `${telemetry.rpm}` : "N/A"}
                         icon={<FaGear style={{ color: "#2563FF", fontSize: "24px" }} />}
                         status="Engine Stable"
                     />
@@ -77,11 +90,11 @@ export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
                 <section className={styles.middleSection}>
 
                     <div className={styles.chartCard}>
-                        <LiveTelemetryChart />
+                        <LiveTelemetryChart data={history} />
                     </div>
 
                     <div className={styles.mapCard}>
-                        <VehicleLocation />
+                        <VehicleLocation telemetry={telemetry} />
                     </div>
 
                 </section>
@@ -89,27 +102,22 @@ export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
                 <section className={styles.middleSection}>
 
                     <div className={styles.rpmCard}>
-                        <LiveTelemetryRPmChart />
+                        <LiveTelemetryRPmChart data={history} />
                     </div>
 
                     <div className={styles.healthCard}>
-                        <SystemHealth fuel={65} engineTemperature={90} rpm={2850} />
+                        <SystemHealth
+                            fuel={telemetry?.fuel ?? 0}
+                            engineTemperature={telemetry?.temperature ?? 0}
+                            rpm={telemetry?.rpm ?? 0}
+                        />
                     </div>
                 </section>
 
                 <section className={styles.bottomSection}>
 
                     <div className={styles.vehicleCard}>
-                        <VechileDetails telemetry={{
-                            vehicleId: "VH-1234",
-                            speed: 82,
-                            fuel: 65,
-                            engineTemperature: 90,
-                            rpm: 2850,
-                            latitude: 37.7749,
-                            longitude: -122.4194,
-                            timestamp: "2024-06-01 14:30:00"
-                        }} />
+                        <VechileDetails telemetry={currentTelemetry} />
                     </div>
 
                 </section>

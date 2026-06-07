@@ -13,14 +13,13 @@ const receiveTelemetry = async (req, res) => {
         const savedTelemetry =
             await telemetryService.saveTelemetry(telemetryData);
 
-        io.emit("telemetry-update", savedTelemetry);
+        io.emit("telemetry-update", telemetryData);
 
         res.status(200).json({
             success: true,
             data: savedTelemetry
         });
 
-        console.log("Telemetry received:", telemetryData);
 
     } catch (error) {
         console.log("Telemetry receive error:", error);

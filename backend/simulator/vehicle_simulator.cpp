@@ -120,13 +120,10 @@ string createJSON(TelemetryData data)
 
 void sendTelemetry(string jsonData)
 {
-
-    cout << "HERE" << endl;
     CURL *curl;
     CURLcode res;
 
     curl = curl_easy_init();
-
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/api/telemetry");
@@ -137,8 +134,21 @@ void sendTelemetry(string jsonData)
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
 
+        // Perform the request
         res = curl_easy_perform(curl);
 
+        // Check for errors
+        if (res != CURLE_OK)
+        {
+            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
+        }
+        else
+        {
+            cout << "Telemetry sent successfully." << endl;
+        }
+
+        // Clean up
+        curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
     }
 }
@@ -147,18 +157,20 @@ int main()
 {
     srand(time(0));
 
+    // REQUIRED: Global init
+    curl_global_init(CURL_GLOBAL_ALL);
+
     initializeVehicle();
 
     while (true)
     {
         TelemetryData data = generateTelemetry();
-
         string jsonData = createJSON(data);
-
         sendTelemetry(jsonData);
-
         this_thread::sleep_for(chrono::seconds(2));
     }
 
+    // Clean up before exit
+    curl_global_cleanup();
     return 0;
 }
