@@ -66,9 +66,9 @@
     border: 1px solid var(--border, #1B2A45);
 }
 
-.rpmCard,
+
 .healthCard {
-    height: 350px;
+    height: 410px;
 
     background: var(--surface, #0D1B31);
 

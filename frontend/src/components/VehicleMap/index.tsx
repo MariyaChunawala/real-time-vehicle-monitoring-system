@@ -1,10 +1,14 @@
-import { telemetryData } from "../../constants/telemetryDummyData";
+import type { Telemetry } from "../../types/telemetry";
 import Styles from "./style.module.css";
 
-export default function VehicleLocation() {
+interface VehicleLocationProps {
+    telemetry: Telemetry | null;
+}
 
-    const latestTelemetry =
-        telemetryData[telemetryData.length - 1];
+export default function VehicleLocation({ telemetry }: VehicleLocationProps) {
+
+    const latitude = telemetry?.latitude ?? "N/A";
+    const longitude = telemetry?.longitude ?? "N/A";
 
     return (
         <div className={Styles.locationCard}>
@@ -26,7 +30,7 @@ export default function VehicleLocation() {
                     <span>Latitude</span>
 
                     <h3>
-                        {latestTelemetry.latitude}
+                        {latitude}
                     </h3>
                 </div>
 
@@ -34,7 +38,7 @@ export default function VehicleLocation() {
                     <span>Longitude</span>
 
                     <h3>
-                        {latestTelemetry.longitude}
+                        {longitude}
                     </h3>
                 </div>
 

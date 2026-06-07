@@ -31,7 +31,7 @@ export default function VehicleDetails({
 
                 <div className={Styles.detailRow}>
                     <span>Engine Temp</span>
-                    <strong>{telemetry.engineTemperature}°C</strong>
+                    <strong>{telemetry.temperature}°C</strong>
                 </div>
 
                 <div className={Styles.detailRow}>

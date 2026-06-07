@@ -9,10 +9,9 @@ import {
     Legend,
 } from "recharts";
 import Styles from "./style.module.css";
+import type { Telemetry } from "../../types/telemetry";
 
-import { telemetryData } from "../../constants/telemetryDummyData";
-
-export function LiveTelemetryChart() {
+export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
     return (
         <div className={Styles.chartCard}>
             <div className={Styles.cardTitle}>
@@ -32,10 +31,17 @@ export function LiveTelemetryChart() {
                         <h4>Speed, Fuel & Temperature</h4>
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
-                        <LineChart data={telemetryData}>
+                        <LineChart data={data}>
                             <CartesianGrid stroke="#1B2A45" />
 
-                            <XAxis dataKey="timestamp" stroke="#94A3B8" />
+                            <XAxis dataKey="timestamp" stroke="#94A3B8"
+                                tickFormatter={(value) =>
+                                    new Date(value).toLocaleTimeString("en-GB", {
+                                        hour12: false,
+                                    })
+                                }
+                                interval={5}
+                            />
 
                             <YAxis stroke="#94A3B8" />
 
@@ -63,7 +69,7 @@ export function LiveTelemetryChart() {
 
                             <Line
                                 type="monotone"
-                                dataKey="engineTemperature"
+                                dataKey="temperature"
                                 name="Temp (°C)"
                                 stroke="#EF4444"
                                 strokeWidth={2}
@@ -77,34 +83,49 @@ export function LiveTelemetryChart() {
     );
 }
 
-export function LiveTelemetryRPmChart() {
-
+export function LiveTelemetryRPmChart({ data }: { data: Telemetry[] }) {
     return (
-
-        <div className={Styles.chartSection}>
-            <div className={Styles.chartSectionTitle}>
-                <h4>RPM Trend</h4>
+        <div className={Styles.chartCard}>
+            <div className={Styles.cardTitle}>
+                <div>
+                    <h3>RPM Trend</h3>
+                    <span>RPM over time</span>
+                </div>
             </div>
-            <ResponsiveContainer width="100%" height={240}>
-                <LineChart data={telemetryData}>
-                    <CartesianGrid stroke="#1B2A45" />
+            <div className={Styles.chartBody}>
+                <div className={Styles.chartSection}>
+                    <div className={Styles.chartSectionTitle}>
+                        <h4>RPM Trend</h4>
+                    </div>
+                    <ResponsiveContainer width="100%" height={240}>
+                        <LineChart data={data}>
+                            <CartesianGrid stroke="#1B2A45" />
 
-                    <XAxis dataKey="timestamp" stroke="#94A3B8" />
+                            <XAxis dataKey="timestamp" stroke="#94A3B8"
+                                tickFormatter={(value) =>
+                                    new Date(value).toLocaleTimeString("en-GB", {
+                                        hour12: false,
+                                    })
+                                }
+                                interval={5}
+                            />
 
-                    <YAxis stroke="#94A3B8" />
+                            <YAxis stroke="#94A3B8" />
 
-                    <Tooltip />
+                            <Tooltip />
 
-                    <Line
-                        type="monotone"
-                        dataKey="rpm"
-                        name="RPM"
-                        stroke="#8B5CF6"
-                        strokeWidth={2}
-                        dot={false}
-                    />
-                </LineChart>
-            </ResponsiveContainer>
+                            <Line
+                                type="monotone"
+                                dataKey="rpm"
+                                name="RPM"
+                                stroke="#8B5CF6"
+                                strokeWidth={2}
+                                dot={false}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
         </div>
-    )
+    );
 }

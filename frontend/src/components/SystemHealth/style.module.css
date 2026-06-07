@@ -18,7 +18,7 @@
 
     align-items: center;
 
-    padding: 8px 0;
+    padding: 12px 0;
 
     font-size: 16px;
 
@@ -34,11 +34,11 @@
 }
 
 .healthScore {
-    margin-top: 16px;
+    margin-top: 20px;
 
     text-align: center;
 
-    padding: 8px;
+    padding: 20px;
 
     border-radius: 16px;
 
