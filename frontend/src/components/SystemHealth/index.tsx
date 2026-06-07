@@ -52,22 +52,22 @@ export default function EngineStatus({
             </div>
 
             <div className={Styles.statusItem}>
-                <span><FaCogs style={{ color: '#2563FF' }} /> Engine Status</span>
+                <span><FaCogs style={{ color: 'var(--accent, #2563FF)' }} /> Engine Status</span>
                 <strong>{getEngineStatus(engineTemperature, fuel)}</strong>
             </div>
 
             <div className={Styles.statusItem}>
-                <span><FaThermometerHalf style={{ color: '#2563FF' }} /> Temperature</span>
+                <span><FaThermometerHalf style={{ color: 'var(--accent, #2563FF)' }} /> Temperature</span>
                 <strong>{engineTemperature}°C</strong>
             </div>
 
             <div className={Styles.statusItem}>
-                <span><FaGasPump style={{ color: '#2563FF' }} /> Fuel Status</span>
+                <span><FaGasPump style={{ color: 'var(--accent, #2563FF)' }} /> Fuel Status</span>
                 <strong>{fuel}%</strong>
             </div>
 
             <div className={Styles.statusItem}>
-                <span><FaTachometerAlt style={{ color: '#2563FF' }} /> RPM Status</span>
+                <span><FaTachometerAlt style={{ color: 'var(--accent, #2563FF)' }} /> RPM Status</span>
                 <strong>{rpm} RPM</strong>
             </div>
 

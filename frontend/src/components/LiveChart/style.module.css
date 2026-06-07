@@ -40,8 +40,8 @@
 }
 
 .chartSection {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--surface-alt, #081224);
+    border: 1px solid var(--border, #1B2A45);
     border-radius: 18px;
     padding: 16px;
 }

@@ -60,28 +60,28 @@ export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
                     <TelemetryCard
                         title="Speed"
                         value={telemetry?.speed != null ? `${telemetry.speed} km/h` : "N/A"}
-                        icon={<FaCar style={{ color: "#2563FF", fontSize: "24px" }} />}
+                        icon={<FaCar style={{ color: "var(--accent, #2563FF)", fontSize: "24px" }} />}
                         status="Normal Speed"
                     />
 
                     <TelemetryCard
                         title="Fuel"
                         value={telemetry?.fuel != null ? `${telemetry.fuel}%` : "N/A"}
-                        icon={<FaGasPump style={{ color: "#2563FF", fontSize: "24px" }} />}
+                        icon={<FaGasPump style={{ color: "var(--accent, #2563FF)", fontSize: "24px" }} />}
                         status={getFuelStatus(telemetry?.fuel || 0)}
                     />
 
                     <TelemetryCard
                         title="Temperature"
                         value={telemetry?.temperature != null ? `${telemetry.temperature}°C` : "N/A"}
-                        icon={<CiTempHigh style={{ color: "#2563FF", fontSize: "24px" }} />}
+                        icon={<CiTempHigh style={{ color: "var(--accent, #2563FF)", fontSize: "24px" }} />}
                         status={getTemperatureStatus(telemetry?.temperature || 0)}
                     />
 
                     <TelemetryCard
                         title="RPM"
                         value={telemetry?.rpm != null ? `${telemetry.rpm}` : "N/A"}
-                        icon={<FaGear style={{ color: "#2563FF", fontSize: "24px" }} />}
+                        icon={<FaGear style={{ color: "var(--accent, #2563FF)", fontSize: "24px" }} />}
                         status="Engine Stable"
                     />
 

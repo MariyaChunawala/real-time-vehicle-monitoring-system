@@ -2,6 +2,7 @@ import Sidebar from "./components/Sidebar/index.tsx";
 import "./App.css";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard/index.tsx";
+import HistoryPage from "./pages/History/index.tsx";
 
 function App() {
   const [isActivePage, setIsActivePage] = useState("dashboard");
@@ -20,10 +21,11 @@ function App() {
       <Sidebar setIsActivePage={setIsActivePage} />
 
       <main className="main-content">
-        {isActivePage === "dashboard" ? (
+        {isActivePage === "dashboard" && (
           <Dashboard theme={theme} toggleTheme={toggleTheme} />
-        ) : (
-          <></>
+        )}
+        {isActivePage === "history" && (
+          <HistoryPage theme={theme} toggleTheme={toggleTheme} />
         )}
       </main>
     </div>

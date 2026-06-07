@@ -32,9 +32,9 @@ export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
                         <LineChart data={data}>
-                            <CartesianGrid stroke="#1B2A45" />
+                            <CartesianGrid stroke="var(--border, #1B2A45)" />
 
-                            <XAxis dataKey="timestamp" stroke="#94A3B8"
+                            <XAxis dataKey="timestamp" stroke="var(--text-secondary, #94A3B8)"
                                 tickFormatter={(value) =>
                                     new Date(value).toLocaleTimeString("en-GB", {
                                         hour12: false,
@@ -43,7 +43,7 @@ export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
                                 interval={5}
                             />
 
-                            <YAxis stroke="#94A3B8" />
+                            <YAxis stroke="var(--text-secondary, #94A3B8)" />
 
                             <Tooltip />
 
@@ -53,7 +53,7 @@ export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
                                 type="monotone"
                                 dataKey="speed"
                                 name="Speed (km/h)"
-                                stroke="#3B82F6"
+                                stroke="var(--accent, #3B82F6)"
                                 strokeWidth={2}
                                 dot={false}
                             />
@@ -62,7 +62,7 @@ export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
                                 type="monotone"
                                 dataKey="fuel"
                                 name="Fuel (%)"
-                                stroke="#22C55E"
+                                stroke="var(--online, #22C55E)"
                                 strokeWidth={2}
                                 dot={false}
                             />
@@ -71,7 +71,7 @@ export function LiveTelemetryChart({ data }: { data: Telemetry[] }) {
                                 type="monotone"
                                 dataKey="temperature"
                                 name="Temp (°C)"
-                                stroke="#EF4444"
+                                stroke="var(--warning, #EF4444)"
                                 strokeWidth={2}
                                 dot={false}
                             />
@@ -99,9 +99,9 @@ export function LiveTelemetryRPmChart({ data }: { data: Telemetry[] }) {
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
                         <LineChart data={data}>
-                            <CartesianGrid stroke="#1B2A45" />
+                            <CartesianGrid stroke="var(--border, #1B2A45)" />
 
-                            <XAxis dataKey="timestamp" stroke="#94A3B8"
+                            <XAxis dataKey="timestamp" stroke="var(--text-secondary, #94A3B8)"
                                 tickFormatter={(value) =>
                                     new Date(value).toLocaleTimeString("en-GB", {
                                         hour12: false,
@@ -110,7 +110,7 @@ export function LiveTelemetryRPmChart({ data }: { data: Telemetry[] }) {
                                 interval={5}
                             />
 
-                            <YAxis stroke="#94A3B8" />
+                            <YAxis stroke="var(--text-secondary, #94A3B8)" />
 
                             <Tooltip />
 
@@ -118,7 +118,7 @@ export function LiveTelemetryRPmChart({ data }: { data: Telemetry[] }) {
                                 type="monotone"
                                 dataKey="rpm"
                                 name="RPM"
-                                stroke="#8B5CF6"
+                                stroke="var(--rpm, #8B5CF6)"
                                 strokeWidth={2}
                                 dot={false}
                             />
