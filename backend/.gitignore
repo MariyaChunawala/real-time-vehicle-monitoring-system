@@ -1,3 +1,9 @@
 simulator/simulator.exe
 
+.env
+
 node_modules/
+
+index.js
+
+Documentation.md

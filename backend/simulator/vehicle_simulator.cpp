@@ -120,6 +120,8 @@ string createJSON(TelemetryData data)
 
 void sendTelemetry(string jsonData)
 {
+
+    cout << "HERE" << endl;
     CURL *curl;
     CURLcode res;
 
@@ -127,7 +129,7 @@ void sendTelemetry(string jsonData)
 
     if (curl)
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/telemetry");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/api/telemetry");
 
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "Content-Type: application/json");
