@@ -21,6 +21,16 @@ const settingsSchema = new mongoose.Schema({
     maxRpm: {
         type: Number,
         default: 5500
+    },
+
+    criticalAlerts: {
+        type: Boolean,
+        default: true
+    },
+
+    warningAlerts: {
+        type: Boolean,
+        default: true
     }
 });
 

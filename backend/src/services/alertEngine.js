@@ -53,23 +53,21 @@ const processAlerts = async (
      * OVERHEATING
      */
     if (
-        telemetry.engineTemperature >
+        telemetry.temperature >
         settings.maxTemperature &&
         settings.criticalAlerts &&
         canCreateAlert(
             "OVERHEATING"
         )
     ) {
-
         const alert =
             await alertService.createAlert(
                 "OVERHEATING",
                 "CRITICAL",
                 "Engine temperature too high",
-                telemetry.engineTemperature,
+                telemetry.temperatureemperature,
                 telemetry.vehicleId
             );
-
         alerts.push(alert);
     }
 

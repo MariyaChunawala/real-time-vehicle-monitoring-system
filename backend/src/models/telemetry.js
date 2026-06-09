@@ -7,7 +7,7 @@ const telemetrySchema = new mongoose.Schema({
 
     fuel: Number,
 
-    engineTemperature: Number,
+    temperature: Number,
 
     rpm: Number,
 
