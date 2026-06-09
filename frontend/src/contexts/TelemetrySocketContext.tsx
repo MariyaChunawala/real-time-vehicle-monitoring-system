@@ -39,10 +39,6 @@ export const TelemetryProvider = ({
         useState(false);
 
     useEffect(() => {
-        console.log("Telemetry state changed", telemetry);
-    }, [telemetry]);
-
-    useEffect(() => {
         const fetchTelemetry = async () => {
             try {
                 const response = await axios.get(
@@ -66,8 +62,6 @@ export const TelemetryProvider = ({
 
         socket.on("connect", () => {
             setConnected(true);
-
-            console.log("Connected:", socket.id);
         });
 
         socket.on("connect_error", (error) => {
@@ -79,7 +73,6 @@ export const TelemetryProvider = ({
         });
 
         const handleTelemetryUpdate = (data: Telemetry) => {
-            console.log("Received telemetry update:", data);
             setTelemetry(data);
             setHistory((prev) => [
                 ...prev.slice(-49),
@@ -119,6 +112,5 @@ export const useTelemetry = () => {
             "useTelemetry must be used inside TelemetryProvider"
         );
     }
-    console.log("Telemetry Context:", context);
     return context;
 };

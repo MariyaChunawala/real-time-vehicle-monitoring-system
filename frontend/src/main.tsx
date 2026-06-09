@@ -4,11 +4,14 @@ import App from './App.tsx'
 import {
   TelemetryProvider,
 } from "./contexts/TelemetrySocketContext.tsx";
+import { AlertProvider } from './contexts/AlertContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <TelemetryProvider>
-      <App />
+      <AlertProvider>
+        <App />
+      </AlertProvider>
     </TelemetryProvider>
   </StrictMode>
 

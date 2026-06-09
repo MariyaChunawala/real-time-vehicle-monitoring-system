@@ -8,13 +8,16 @@ import VehicleLocation from "../../components/VehicleMap/index.tsx";
 import SystemHealth from "../../components/SystemHealth/index.tsx";
 import VechileDetails from "../../components/VehicleDetails/index.tsx";
 import { useTelemetry } from "../../contexts/TelemetrySocketContext.tsx";
+import { useAlerts } from "../../contexts/AlertContext.tsx";
+import { useState } from "react";
 
 interface DashboardProps {
     theme: string;
     toggleTheme: () => void;
+    onNavigateAlerts: () => void;
 }
 
-export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
+export default function Dashboard({ theme, toggleTheme, onNavigateAlerts }: DashboardProps) {
 
     const { telemetry, history } = useTelemetry();
 
@@ -52,7 +55,7 @@ export default function Dashboard({ theme, toggleTheme }: DashboardProps) {
             <main className={styles.content}>
 
                 <header className={styles.header}>
-                    <DashboardHeader theme={theme} toggleTheme={toggleTheme} />
+                    <DashboardHeader theme={theme} toggleTheme={toggleTheme} onNavigateAlerts={onNavigateAlerts} />
                 </header>
 
                 <section className={styles.summaryCards}>

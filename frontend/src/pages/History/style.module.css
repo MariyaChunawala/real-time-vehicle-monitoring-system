@@ -30,7 +30,8 @@
     font-weight: 600;
 }
 
-.exportBtn:hover {
+.exportBtn:hover,
+.resetButton:hover {
     opacity: 0.9;
 }
 
@@ -165,8 +166,4 @@
     font-weight: 500;
 
     transition: all 0.2s ease;
-}
-
-.resetButton:hover {
-    background: #334155;
 }
