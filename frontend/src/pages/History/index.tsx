@@ -170,7 +170,7 @@ export default function HistoryPage(props: any) {
                 </div>
 
                 <div className={Style.summaryCard}>
-                    <span>Avg Temp</span>
+                    <span>Avg. Temperature</span>
                     <h2>
                         {
                             filteredHistory.length
@@ -200,7 +200,7 @@ export default function HistoryPage(props: any) {
                             <th>Speed</th>
                             <th>RPM</th>
                             <th>Fuel</th>
-                            <th>Temp</th>
+                            <th>Temperature</th>
                             <th>Latitude</th>
                             <th>Longitude</th>
                         </tr>

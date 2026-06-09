@@ -86,6 +86,10 @@ TelemetryData generateTelemetry()
     vehicleState.engineTemperature =
         70 + (vehicleState.speed * 0.3);
 
+    // HARSH BRAKING EVENT
+    if (rand() % 20 == 0)
+        vehicleState.speed -= 30;
+
     // GPS MOVEMENT
     vehicleState.latitude += vehicleState.speed * 0.000001;
 

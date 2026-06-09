@@ -1,4 +1,5 @@
 const telemetryService = require("../services/telemetryService");
+const alertEngine = require("../services/alertEngine");
 
 let io;
 
@@ -14,6 +15,11 @@ const receiveTelemetry = async (req, res) => {
             await telemetryService.saveTelemetry(telemetryData);
 
         io.emit("telemetry-update", telemetryData);
+
+        await alertEngine.processAlerts(
+            savedTelemetry,
+            io
+        );
 
         res.status(200).json({
             success: true,

@@ -1,0 +1,251 @@
+.alertsPage {
+    display: grid;
+
+    gap: 24px;
+
+    padding: 24px;
+
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: var(--surface, #0D1B31);
+    border: 1px solid var(--border, #1B2A45);
+    border-radius: 20px;
+}
+
+.pageHeader h1 {
+    color: var(--text-primary, #F8FAFC);
+}
+
+.pageHeader p {
+    color: var(--text-secondary, #94A3B8);
+}
+
+.statusCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.statusCard {
+    padding: 20px;
+    border-radius: 18px;
+    background: var(--surface, #0D1B31);
+    border: 1px solid var(--border, #1B2A45);
+}
+
+.statusCardTitle {
+    font-size: 14px;
+    color: var(--text-secondary, #94A3B8);
+    margin-bottom: 10px;
+}
+
+.statusCardValue {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary, #F8FAFC);
+}
+
+.statusCardBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.statusCardBadge.active {
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--accent, #3B82F6);
+}
+
+.statusCardBadge.critical {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--warning, #EF4444);
+}
+
+.statusCardBadge.warning {
+    background: rgba(251, 191, 36, 0.14);
+    color: #f59e0b;
+}
+
+.statusCardBadge.resolved {
+    background: rgba(34, 197, 94, 0.12);
+    color: var(--online, #22C55E);
+}
+
+.alertList {
+    background: var(--surface, #0D1B31);
+    border: 1px solid var(--border, #1B2A45);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.alertListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border, #1B2A45);
+    background: var(--surface-alt, #081224);
+}
+
+.alertListHeader h2 {
+    margin: 0;
+    color: var(--text-primary, #F8FAFC);
+}
+
+.alertListHeader p {
+    margin: 0;
+    color: var(--text-secondary, #94A3B8);
+}
+
+.alertListBody {
+    display: grid;
+    gap: 1px;
+    background: var(--border, #1B2A45);
+}
+
+.alertItem {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--surface, #0D1B31);
+}
+
+.alertItem:nth-child(odd) {
+    background: var(--surface-alt, #081224);
+}
+
+.alertLeft {
+    display: grid;
+    gap: 8px;
+}
+
+.alertTitle {
+    color: var(--text-primary, #F8FAFC);
+    font-weight: 600;
+    margin: 0;
+}
+
+.alertMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--text-secondary, #94A3B8);
+    font-size: 13px;
+}
+
+.alertSeverity {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.alertSeverity.CRITICAL {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--warning, #EF4444);
+}
+
+.alertSeverity.WARNING {
+    background: rgba(251, 191, 36, 0.14);
+    color: #f59e0b;
+}
+
+.alertSeverity.INFO {
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--accent, #3B82F6);
+}
+
+.alertStatus {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.alertStatus.ACTIVE {
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--accent, #3B82F6);
+}
+
+.alertStatus.RESOLVED {
+    background: rgba(34, 197, 94, 0.12);
+    color: var(--online, #22C55E);
+}
+
+.alertItemTime {
+    color: var(--text-secondary, #94A3B8);
+    white-space: nowrap;
+}
+
+.dashboardAlertPreview {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.previewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.previewHeader h2 {
+    margin: 0;
+    color: var(--text-primary, #F8FAFC);
+}
+
+.previewHeader button {
+    border: 1px solid var(--border, #1B2A45);
+    background: transparent;
+    color: var(--text-primary, #F8FAFC);
+    padding: 10px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.previewHeader button:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.previewList {
+    display: grid;
+    gap: 12px;
+}
+
+.previewItem {
+    display: grid;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 18px;
+    background: var(--surface-alt, #081224);
+    border: 1px solid var(--border, #1B2A45);
+}
+
+.previewItemHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.previewItemHeader span {
+    color: var(--text-secondary, #94A3B8);
+    font-size: 13px;
+}
+
+.previewMessage {
+    color: var(--text-primary, #F8FAFC);
+    margin: 0;
+}
