@@ -97,8 +97,6 @@
 }
 
 .saveButton {
-    margin-top: 16px;
-
     background: var(--accent, #3B82F6);
 
     color: var(--text-primary, #F8FAFC);
@@ -114,9 +112,10 @@
     font-weight: 600;
 
     transition: all 0.2s ease;
+
+    float: right;
 }
 
 .saveButton:hover {
     background: var(--accent-strong, #2563FF);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }

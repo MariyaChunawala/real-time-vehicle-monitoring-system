@@ -1,6 +1,9 @@
 const alertService =
     require("./alertService");
 
+const settingsService =
+    require("./settingsService");
+
 let previousSpeed = 0;
 
 const lastAlertTimes = {};
@@ -42,12 +45,17 @@ const processAlerts = async (
 
     const alerts = [];
 
+    const settings =
+        await settingsService
+            .getSettings();
+
     /*
      * OVERHEATING
      */
     if (
         telemetry.engineTemperature >
-        100 &&
+        settings.maxTemperature &&
+        settings.criticalAlerts &&
         canCreateAlert(
             "OVERHEATING"
         )
@@ -69,7 +77,8 @@ const processAlerts = async (
      * LOW FUEL
      */
     if (
-        telemetry.fuel < 20 &&
+        telemetry.fuel < settings.lowFuelThreshold &&
+        settings.warningAlerts &&
         canCreateAlert(
             "LOW_FUEL"
         )
@@ -79,7 +88,7 @@ const processAlerts = async (
             await alertService.createAlert(
                 "LOW_FUEL",
                 "WARNING",
-                "Fuel level below 20%",
+                `Fuel level below ${settings.lowFuelThreshold}%`,
                 telemetry.fuel,
                 telemetry.vehicleId
             );
@@ -91,7 +100,9 @@ const processAlerts = async (
      * OVER SPEEDING
      */
     if (
-        telemetry.speed > 100 &&
+        telemetry.speed >
+        settings.maxSpeed &&
+        settings.warningAlerts &&
         canCreateAlert(
             "OVER_SPEED"
         )
@@ -115,6 +126,7 @@ const processAlerts = async (
 
     if (
         speedDrop > 25 &&
+        settings.warningAlerts &&
         canCreateAlert(
             "HARSH_BRAKING"
         )
