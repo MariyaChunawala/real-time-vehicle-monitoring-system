@@ -33,5 +33,9 @@ Development and setup steps are documented in each project folder. See the proje
 ### Setting Page
 ![Descriptive Alt Text](docs/media/SettingsPage.png)
 
+### Light Theme Mode
+![Descriptive Alt Text](docs/media/LightTheme1.png)
+![Descriptive Alt Text](docs/media/LightTheme2.png)
+
 ### Video
 https://github.com/user-attachments/assets/afa653b6-4c4e-425e-b3b1-59143ef6684d
