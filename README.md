@@ -34,4 +34,4 @@ Development and setup steps are documented in each project folder. See the proje
 ![Descriptive Alt Text](docs/media/SettingsPage.png)
 
 ### Video
-![Descriptive Alt Text](docs/media/VMS.mp4)
+https://github.com/user-attachments/assets/afa653b6-4c4e-425e-b3b1-59143ef6684d
