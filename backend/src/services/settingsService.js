@@ -13,6 +13,30 @@ const getSettings =
 
             settings =
                 await Settings.create({});
+        } else {
+            const updates = {};
+
+            if (
+                settings.criticalAlerts ===
+                undefined
+            ) {
+                updates.criticalAlerts = true;
+            }
+
+            if (
+                settings.warningAlerts ===
+                undefined
+            ) {
+                updates.warningAlerts = true;
+            }
+
+            if (Object.keys(updates).length > 0) {
+                settings = await Settings.findOneAndUpdate(
+                    {},
+                    updates,
+                    { new: true }
+                );
+            }
         }
 
         return settings;

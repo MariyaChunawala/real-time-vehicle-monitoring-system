@@ -1,15 +1,25 @@
-#include <iostream> // input/output library
-#include <string>   // Used for working with text/string data.
-#include <cstdlib>  // Used for rand()
-#include <ctime>    // Used for getting current time
-// Below libraries are used for delay and sleep timers
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 #include <thread>
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <cmath>
+#include <algorithm>
 #include <curl/curl.h>
 
 using namespace std;
+
+enum DrivingMode
+{
+    IDLE,
+    ACCELERATING,
+    CRUISING,
+    BRAKING,
+    STOPPED
+};
 
 struct TelemetryData
 {
@@ -20,31 +30,34 @@ struct TelemetryData
     int rpm;
     double latitude;
     double longitude;
+    double odometer;
+    string event;
     string timestamp;
 };
 
 TelemetryData vehicleState;
 
+DrivingMode currentMode = IDLE;
+double heading = 90.0;
+int modeDuration = 0;
+double targetSpeed = 0;
+
 void initializeVehicle()
 {
     vehicleState.vehicleId = "VH001";
-
     vehicleState.speed = 0;
-
-    vehicleState.fuel = 100;
-
+    vehicleState.fuel = 100.0;
     vehicleState.engineTemperature = 75;
-
     vehicleState.rpm = 800;
-
     vehicleState.latitude = 23.0225;
-
     vehicleState.longitude = 72.5714;
+    vehicleState.odometer = 0.0;
+    vehicleState.event = "NONE";
 }
 
 string getCurrentTimestamp()
 {
-    time_t now = time(0);
+    time_t now = time(nullptr);
     tm *ltm = localtime(&now);
 
     stringstream ss;
@@ -59,122 +72,300 @@ string getCurrentTimestamp()
     return ss.str();
 }
 
-TelemetryData generateTelemetry()
+void updateDrivingMode()
 {
-    // RANDOM ACCELERATION / DECELERATION
-    int acceleration = (rand() % 11) - 5;
+    if (modeDuration > 0)
+    {
+        modeDuration--;
+        return;
+    }
 
-    vehicleState.speed += acceleration;
+    int chance = rand() % 100;
 
-    // SPEED LIMITS
+    if (vehicleState.speed == 0)
+    {
+        currentMode = ACCELERATING;
+        targetSpeed = 40 + rand() % 40;
+        modeDuration = 15 + rand() % 15;
+        return;
+    }
+
+    if (chance < 20)
+    {
+        currentMode = ACCELERATING;
+        targetSpeed = 60 + rand() % 50;
+        modeDuration = 10 + rand() % 15;
+    }
+    else if (chance < 70)
+    {
+        currentMode = CRUISING;
+        targetSpeed = vehicleState.speed;
+        modeDuration = 20 + rand() % 30;
+    }
+    else if (chance < 90)
+    {
+        currentMode = BRAKING;
+        targetSpeed = 20 + rand() % 30;
+        modeDuration = 5 + rand() % 10;
+    }
+    else
+    {
+        currentMode = STOPPED;
+        targetSpeed = 0;
+        modeDuration = 5 + rand() % 10;
+    }
+}
+
+void updateSpeed()
+{
+    switch (currentMode)
+    {
+    case ACCELERATING:
+
+        if (vehicleState.speed < targetSpeed)
+        {
+            vehicleState.speed += 2 + rand() % 2;
+        }
+        else
+        {
+            currentMode = CRUISING;
+        }
+
+        break;
+
+    case CRUISING:
+
+        vehicleState.speed += (rand() % 3) - 1;
+
+        break;
+
+    case BRAKING:
+
+        if (vehicleState.speed > targetSpeed)
+        {
+            vehicleState.speed -= 3 + rand() % 2;
+        }
+        else
+        {
+            currentMode = CRUISING;
+        }
+
+        break;
+
+    case STOPPED:
+
+        vehicleState.speed -= 5;
+
+        break;
+
+    case IDLE:
+
+        vehicleState.speed -= 1;
+
+        break;
+    }
+
     if (vehicleState.speed < 0)
         vehicleState.speed = 0;
 
     if (vehicleState.speed > 120)
         vehicleState.speed = 120;
+}
 
-    // RPM BASED ON SPEED
-    vehicleState.rpm = 800 + (vehicleState.speed * 40);
+void updateRPM()
+{
+    if (vehicleState.speed == 0)
+    {
+        vehicleState.rpm = 800;
+        return;
+    }
 
-    // FUEL CONSUMPTION
-    vehicleState.fuel -= vehicleState.speed * 0.0008;
+    int baseRPM;
+
+    if (vehicleState.speed < 20)
+        baseRPM = 1200;
+    else if (vehicleState.speed < 40)
+        baseRPM = 1800;
+    else if (vehicleState.speed < 60)
+        baseRPM = 2200;
+    else if (vehicleState.speed < 80)
+        baseRPM = 2600;
+    else
+        baseRPM = 3000;
+
+    vehicleState.rpm =
+        baseRPM + ((rand() % 201) - 100);
+}
+
+void updateTemperature()
+{
+    int targetTemp = 80;
+
+    if (vehicleState.speed > 20)
+        targetTemp += 5;
+
+    if (vehicleState.speed > 60)
+        targetTemp += 5;
+
+    if (vehicleState.speed > 100)
+        targetTemp += 5;
+
+    if (vehicleState.engineTemperature < targetTemp)
+        vehicleState.engineTemperature++;
+
+    if (vehicleState.engineTemperature > targetTemp)
+        vehicleState.engineTemperature--;
+}
+
+void updateFuel()
+{
+    double burnRate = vehicleState.rpm / 1000000.0;
+
+    if (currentMode == ACCELERATING)
+        burnRate *= 1.5;
+
+    vehicleState.fuel -= burnRate;
 
     if (vehicleState.fuel < 0)
         vehicleState.fuel = 0;
+}
 
-    // ENGINE TEMPERATURE
-    vehicleState.engineTemperature =
-        70 + (vehicleState.speed * 0.3);
+void updateGPS()
+{
+    heading += ((rand() % 5) - 2);
 
-    // HARSH BRAKING EVENT
-    if (rand() % 20 == 0)
-        vehicleState.speed -= 30;
+    if (heading < 0)
+        heading += 360;
 
-    // GPS MOVEMENT
-    vehicleState.latitude += vehicleState.speed * 0.000001;
+    if (heading > 360)
+        heading -= 360;
 
-    vehicleState.longitude += vehicleState.speed * 0.000001;
+    double distance =
+        vehicleState.speed * 0.000002;
 
-    // TIMESTAMP
+    double radians =
+        heading * M_PI / 180.0;
+
+    vehicleState.latitude +=
+        distance * cos(radians);
+
+    vehicleState.longitude +=
+        distance * sin(radians);
+}
+
+TelemetryData generateTelemetry()
+{
+    updateDrivingMode();
+
+    updateSpeed();
+
+    updateRPM();
+
+    updateTemperature();
+
+    updateFuel();
+
+    updateGPS();
+
     vehicleState.timestamp = getCurrentTimestamp();
 
     return vehicleState;
 }
 
-string createJSON(TelemetryData data)
+string createJSON(const TelemetryData &data)
 {
-    return "{"
-           "\"vehicleId\":\"VH001\","
-           "\"speed\":" +
-           to_string(data.speed) + ","
-                                   "\"fuel\":" +
-           to_string(data.fuel) + ","
-                                  "\"temperature\":" +
-           to_string(data.engineTemperature) + ","
-                                               "\"rpm\":" +
-           to_string(data.rpm) + ","
-                                 "\"latitude\":" +
-           to_string(data.latitude) + ","
-                                      "\"longitude\":" +
-           to_string(data.longitude) + ","
-                                       "\"timestamp\":\"" +
-           data.timestamp + "\""
-                            "}";
+    stringstream json;
+
+    json << "{"
+         << "\"vehicleId\":\"" << data.vehicleId << "\","
+         << "\"speed\":" << data.speed << ","
+         << "\"fuel\":" << fixed << setprecision(2) << data.fuel << ","
+         << "\"temperature\":" << data.engineTemperature << ","
+         << "\"rpm\":" << data.rpm << ","
+         << "\"latitude\":" << data.latitude << ","
+         << "\"longitude\":" << data.longitude << ","
+         << "\"timestamp\":\"" << data.timestamp << "\""
+         << "}";
+
+    return json.str();
 }
 
-void sendTelemetry(string jsonData)
+void sendTelemetry(const string &jsonData)
 {
     CURL *curl;
     CURLcode res;
 
     curl = curl_easy_init();
-    if (curl)
+
+    if (!curl)
+        return;
+
+    struct curl_slist *headers = nullptr;
+
+    headers = curl_slist_append(
+        headers,
+        "Content-Type: application/json");
+
+    curl_easy_setopt(
+        curl,
+        CURLOPT_URL,
+        "http://localhost:5000/api/telemetry");
+
+    curl_easy_setopt(
+        curl,
+        CURLOPT_HTTPHEADER,
+        headers);
+
+    curl_easy_setopt(
+        curl,
+        CURLOPT_POSTFIELDS,
+        jsonData.c_str());
+
+    res = curl_easy_perform(curl);
+
+    if (res != CURLE_OK)
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/api/telemetry");
-
-        struct curl_slist *headers = NULL;
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
-
-        // Perform the request
-        res = curl_easy_perform(curl);
-
-        // Check for errors
-        if (res != CURLE_OK)
-        {
-            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
-        }
-        else
-        {
-            cout << "Telemetry sent successfully." << endl;
-        }
-
-        // Clean up
-        curl_slist_free_all(headers);
-        curl_easy_cleanup(curl);
+        cerr << "Send Failed: "
+             << curl_easy_strerror(res)
+             << endl;
     }
+    else
+    {
+        cout << "Sent: "
+             << jsonData
+             << endl;
+    }
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
 }
 
 int main()
 {
-    srand(time(0));
+    srand(static_cast<unsigned>(time(nullptr)));
 
-    // REQUIRED: Global init
     curl_global_init(CURL_GLOBAL_ALL);
 
     initializeVehicle();
 
+    cout << "Vehicle Telemetry Simulator Started"
+         << endl;
+
     while (true)
     {
-        TelemetryData data = generateTelemetry();
-        string jsonData = createJSON(data);
+        TelemetryData data =
+            generateTelemetry();
+
+        string jsonData =
+            createJSON(data);
+
         sendTelemetry(jsonData);
-        this_thread::sleep_for(chrono::seconds(2));
+
+        this_thread::sleep_for(
+            chrono::seconds(2));
     }
 
-    // Clean up before exit
     curl_global_cleanup();
+
     return 0;
 }
